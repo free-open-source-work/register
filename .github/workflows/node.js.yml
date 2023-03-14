@@ -32,5 +32,4 @@ jobs:
         envkey_ZONE_ID: ${{ secrets.ZONE_ID }}
         envkey_CF_TOKEN: ${{ secrets.CF_TOKEN }}
     - run: npm install
-    - run: export  
-    - run: npm test
+    - run:  node add_domain.js
