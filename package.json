@@ -1,0 +1,13 @@
+{
+  "name": "register",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/free-open-source-work/register.git",
+  "author": "Neon <58448036+NeonGamerBot-QK@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cloudflare": "^2.9.1",
+    "dotenv": "^16.0.3",
+    "joi": "^17.8.3"
+  }
+}
