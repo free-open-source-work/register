@@ -101,6 +101,7 @@ async function main() {
       comment: `domain from github requested by ${domainData.contact.email}`,
       ttl: 1
     };
+    console.log(body)
     domainscf.delete(formatName(domainData.path));
     cf.dnsRecords.add(process.env.ZONE_ID, body).then((e) => {
       console.log("+ Added domain", formatName(domainData.path));
