@@ -31,6 +31,9 @@ function getType(rawType) {
     case "cname":
       type = "CNAME";
       break;
+      default: 
+    type = rawType.toUpperCase();
+      break;
   }
   return type;
 }
