@@ -1,6 +1,7 @@
 require("dotenv").config();
 const Joi = require("joi");
 const fs = require("fs");
+const regexes = require("./restricted_domains.js")
 const domainSchema = Joi.object({
   path: Joi.string().required(),
   domain: Joi.object({
@@ -17,6 +18,9 @@ function validateDomain(domainData) {
     console.log("X", error.message);
     return false;
   }
+  for (const regex of regexes) {
+    if(new RegExp(regex, "i").test(domainData.path)) return "Failed to regex /"+regex+"/i" ;
+  } 
   return true;
 }
 function getType(rawType) {
@@ -29,6 +33,9 @@ function getType(rawType) {
 
     case "cname":
       type = "CNAME";
+      break;
+      default: 
+    type = rawType.toUpperCase();
       break;
   }
   return type;
@@ -62,12 +69,4 @@ function fetchDomains() {
       return json;
     })
     .filter(Boolean);
-}
-fetchDomains();
-function formatName(str) {
-  if (str.startsWith("@")) {
-    return "open-source.work";
-  } else {
-    return str + ".open-source.work";
-  }
 }

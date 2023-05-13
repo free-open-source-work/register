@@ -2,6 +2,7 @@ require("dotenv").config();
 const Joi = require("joi");
 const fs = require("fs");
 const Cloudflare = require("cloudflare");
+const regexps = require("./restricted_domains.js")
 const domainSchema = Joi.object({
   path: Joi.string().required(),
   domain: Joi.object({
@@ -18,6 +19,9 @@ function validateDomain(domainData) {
     console.log("X", error.message);
     return false;
   }
+  for (const regex of regexps) {
+    if(new RegExp(regex, "i").test(domainData.path)) return "Failed to regex /"+regex+"/i" ;
+  } 
   return true;
 }
 function getType(rawType) {
@@ -96,7 +100,7 @@ async function main() {
     const body = {
       content: domainData.domain.data,
       name: formatName(domainData.path),
-      proxied: false,
+      proxied: domainData.domain.proxied || false,
       type: getType(domainData.domain.type),
       comment: `domain from github requested by ${domainData.contact.email}`,
       ttl: 1
